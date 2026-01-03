@@ -25,7 +25,12 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-0+dmu6*lky0l74
 DEBUG = str(os.environ.get('DEBUG')) == "1" # 1 == True
 
 ENV_ALLOWED_HOST = os.environ.get('DJANGO_ALLOWED_HOST') or None
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    os.getenv('APP_DOMAIN', ''),  # e.g., firstapp-pth9e.ondigitalocean.app
+    '.ondigitalocean.app',        # Wildcard for all DO app subdomains (safe and common)
+    'localhost',
+    '127.0.0.1',
+]
 if not DEBUG:
     ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
 
